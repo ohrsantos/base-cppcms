@@ -1,0 +1,14 @@
+FROM alpine
+RUN apk update
+RUN apk add --no-cache git g++ make cmake python zlib-dev pcre-dev
+WORKDIR /opt
+RUN git clone https://github.com/artyom-beilis/cppcms.git cppcms
+WORKDIR /opt/cppcms/build
+RUN cmake ..
+RUN make
+RUN make install
+RUN make clean
+RUN rm -rf /opt/cppcms/build
+WORKDIR /var/www
+EXPOSE 8080
+#CMD ["/bin/bash"]
